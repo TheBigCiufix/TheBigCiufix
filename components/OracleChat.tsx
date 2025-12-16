@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { askTheSage } from '../services/geminiService';
-import { ChatMessage } from '../types';
+import { askTheSage } from '../services/geminiService.ts';
+import { ChatMessage } from '../types.ts';
 import { Send, Bot, Sparkles, Loader2 } from 'lucide-react';
 
 const OracleChat: React.FC = () => {

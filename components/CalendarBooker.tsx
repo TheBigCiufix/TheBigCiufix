@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FaellinoEvent, Attendance, AttendanceStatus, User } from '../types';
+import { FaellinoEvent, Attendance, AttendanceStatus, User } from '../types.ts';
 import { Calendar as CalendarIcon, CheckCircle, XCircle, HelpCircle, Utensils, Gamepad2, Flame, User as UserIcon } from 'lucide-react';
 
 // Mock friends to make the static app feel alive

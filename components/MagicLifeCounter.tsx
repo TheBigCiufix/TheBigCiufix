@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MTGPlayer } from '../types';
+import { MTGPlayer } from '../types.ts';
 import { RefreshCcw, Heart, Skull, Shield } from 'lucide-react';
 
 const INITIAL_LIFE = 40;

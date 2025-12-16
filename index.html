@@ -6,7 +6,21 @@
     <title>Il Faellino Hub</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-      // Polyfill per 'process' per evitare crash su hosting statici puri senza build step complessi
+      // Global Error Handler per vedere cosa non va se l'app non parte
+      window.onerror = function(message, source, lineno, colno, error) {
+        const root = document.getElementById('root');
+        if (root) {
+          root.innerHTML = `
+            <div style="color: #ef4444; padding: 20px; font-family: monospace; background: #1a1c23; height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+              <h2 style="font-size: 1.5rem; margin-bottom: 1rem;">Qualcosa si è rotto 😕</h2>
+              <p style="background: #2d3748; padding: 1rem; rounded: 0.5rem; max-width: 90%; word-break: break-all;">${message}</p>
+              <p style="color: #718096; margin-top: 1rem;">Controlla la console per i dettagli (F12)</p>
+            </div>
+          `;
+        }
+      };
+
+      // Polyfill per 'process'
       window.process = window.process || { env: { API_KEY: '' } };
       
       tailwind.config = {
@@ -35,20 +49,10 @@
         color: #e2e8f0;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       }
-      /* Custom scrollbar for dark mode vibe */
-      ::-webkit-scrollbar {
-        width: 8px;
-      }
-      ::-webkit-scrollbar-track {
-        background: #2d3748; 
-      }
-      ::-webkit-scrollbar-thumb {
-        background: #4a5568; 
-        border-radius: 4px;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: #718096; 
-      }
+      ::-webkit-scrollbar { width: 8px; }
+      ::-webkit-scrollbar-track { background: #2d3748; }
+      ::-webkit-scrollbar-thumb { background: #4a5568; border-radius: 4px; }
+      ::-webkit-scrollbar-thumb:hover { background: #718096; }
     </style>
   <script type="importmap">
 {
@@ -63,10 +67,10 @@
 </script>
 </head>
   <body>
-    <div id="root" class="flex h-screen w-full items-center justify-center text-gray-500">
-      Caricamento Faellino Hub...
+    <div id="root" class="flex h-screen w-full items-center justify-center text-gray-500 flex-col gap-4">
+      <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-500"></div>
+      <div>Caricamento Faellino Hub...</div>
     </div>
-    <!-- QUESTO ERA IL PEZZO MANCANTE FONDAMENTALE -->
     <script type="module" src="./index.tsx"></script>
   </body>
 </html>

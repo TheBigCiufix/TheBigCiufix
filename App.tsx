@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import CalendarBooker from './components/CalendarBooker';
-import OracleChat from './components/OracleChat';
-import MagicLifeCounter from './components/MagicLifeCounter';
+import CalendarBooker from './components/CalendarBooker.tsx';
+import OracleChat from './components/OracleChat.tsx';
+import MagicLifeCounter from './components/MagicLifeCounter.tsx';
 import { Home, Calendar, Bot, Dices, Menu } from 'lucide-react';
 
 enum View {
