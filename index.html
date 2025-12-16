@@ -6,6 +6,9 @@
     <title>Il Faellino Hub</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
+      // Polyfill per 'process' per evitare crash su hosting statici puri senza build step complessi
+      window.process = window.process || { env: { API_KEY: '' } };
+      
       tailwind.config = {
         theme: {
           extend: {

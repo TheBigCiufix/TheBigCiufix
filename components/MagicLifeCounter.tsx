@@ -1,16 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MTGPlayer } from '../types';
 import { RefreshCcw, Heart, Skull, Shield } from 'lucide-react';
 
 const INITIAL_LIFE = 40;
+const STORAGE_KEY = 'faellino_magic_v1';
 
 const MagicLifeCounter: React.FC = () => {
-  const [players, setPlayers] = useState<MTGPlayer[]>([
-    { id: 1, name: 'Giocatore 1', life: INITIAL_LIFE, commanderDamage: 0, poison: 0, color: 'bg-red-900' },
-    { id: 2, name: 'Giocatore 2', life: INITIAL_LIFE, commanderDamage: 0, poison: 0, color: 'bg-blue-900' },
-    { id: 3, name: 'Giocatore 3', life: INITIAL_LIFE, commanderDamage: 0, poison: 0, color: 'bg-green-900' },
-    { id: 4, name: 'Giocatore 4', life: INITIAL_LIFE, commanderDamage: 0, poison: 0, color: 'bg-slate-900' },
-  ]);
+  const [players, setPlayers] = useState<MTGPlayer[]>(() => {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      return JSON.parse(saved);
+    }
+    return [
+      { id: 1, name: 'Giocatore 1', life: INITIAL_LIFE, commanderDamage: 0, poison: 0, color: 'bg-red-900' },
+      { id: 2, name: 'Giocatore 2', life: INITIAL_LIFE, commanderDamage: 0, poison: 0, color: 'bg-blue-900' },
+      { id: 3, name: 'Giocatore 3', life: INITIAL_LIFE, commanderDamage: 0, poison: 0, color: 'bg-green-900' },
+      { id: 4, name: 'Giocatore 4', life: INITIAL_LIFE, commanderDamage: 0, poison: 0, color: 'bg-slate-900' },
+    ];
+  });
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(players));
+  }, [players]);
 
   const updateLife = (id: number, delta: number) => {
     setPlayers(prev => prev.map(p => 
@@ -19,7 +30,9 @@ const MagicLifeCounter: React.FC = () => {
   };
 
   const resetGame = () => {
-    setPlayers(prev => prev.map(p => ({ ...p, life: INITIAL_LIFE, poison: 0, commanderDamage: 0 })));
+    if (confirm("Resettare la partita?")) {
+      setPlayers(prev => prev.map(p => ({ ...p, life: INITIAL_LIFE, poison: 0, commanderDamage: 0 })));
+    }
   };
 
   return (

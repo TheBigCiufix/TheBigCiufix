@@ -17,7 +17,11 @@ let aiClient: GoogleGenAI | null = null;
 
 const getClient = () => {
   if (!aiClient) {
-    aiClient = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    const apiKey = process.env.API_KEY;
+    if (!apiKey) {
+      throw new Error("API Key mancante");
+    }
+    aiClient = new GoogleGenAI({ apiKey });
   }
   return aiClient;
 };
@@ -37,6 +41,9 @@ export const askTheSage = async (prompt: string): Promise<string> => {
     return response.text || "Boh, il fumo mi ha annebbiato i circuiti. Riprova.";
   } catch (error) {
     console.error("Gemini Error:", error);
-    return "C'è stato un errore nel matrix (API Error). Forse manca la chiave?";
+    if ((error as Error).message.includes("API Key mancante")) {
+      return "⚠️ Manca la Chiave API nel sistema. Il Saggio non può rispondere. Se sei l'admin, configura i secrets su GitHub o nel file .env.";
+    }
+    return "C'è stato un errore nel matrix. Forse il wifi del Faellino fa i capricci?";
   }
 };
